@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:naver_shopping_search/models/search_query.dart';
+import 'package:naver_shopping_search/pages/result_page.dart';
+
+import '../utils/logger.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -20,8 +24,28 @@ class _SearchPageState extends State<SearchPage> {
     final form = _formKey.currentState;
 
     if (form != null && form.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('검색을 시작합니다'),
+      ));
       form.save();
-      Navigator.pushNamed(context, routeName);
+
+      // 여기서 _keyword를 provider에 저장
+      // Provider.of<SearchQuery>(context, listen: false).keyword = _keyword!;
+      // var parsedJson;
+      logger.d('${SearchQuery(keywords: _keyword!).toJson().runtimeType}');
+
+      // logger.d('saved keyword: ${context.read<SearchQuery>().keyword}');
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ResultPage(),
+        ),
+      );
+      form.reset();
+      setState(() {
+        autovalidateMode = AutovalidateMode.disabled;
+      });
     }
   }
 
