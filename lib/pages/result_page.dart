@@ -14,49 +14,48 @@ class ResultPage extends StatelessWidget {
       ),
       body: FutureBuilder(
           future: Future.delayed(const Duration(seconds: 2), () async {
-            await context.read<ResultProvider>().fetchResult();
-            return context.read<ResultProvider>().storeList;
+            return await context.read<ResultProvider>().fetchResult();
           }
               // 검색 함수 호출
               ),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data.length == 0) {
-                return Center(
-                  child: const Text(
+                return const Center(
+                  child: Text(
                     '검색 결과가 없습니다.',
                     style: TextStyle(fontSize: 18.0),
                   ),
                 );
               }
-              final _storeList = snapshot.data;
+              final storeList = snapshot.data;
               return Center(
                 child: ListView.builder(
-                  itemCount: _storeList.length,
+                  itemCount: storeList.length,
                   itemBuilder: (context, int index) {
-                    final _storeData = _storeList[index];
+                    final storeData = storeList[index];
                     return ListTile(
-                      title: Text(_storeData.title),
-                      subtitle: Text(_storeData.mallName),
+                      title: Text(storeData.title),
+                      subtitle: Text(storeData.mallName),
                       leading: SizedBox(
                         height: MediaQuery.of(context).size.height / 10,
                         width: MediaQuery.of(context).size.height / 10,
-                        child: Image.network(_storeData.imageUrl),
+                        child: Image.network(storeData.imageUrl),
                       ),
                       onTap: () async {
                         await launchUrlString(
-                          _storeData.link,
+                          storeData.link,
                           mode: LaunchMode.externalApplication,
                         );
                       },
-                      trailing: Text('${_storeData.price}원'),
+                      trailing: Text('${storeData.price}원'),
                     );
                   },
                 ),
               );
             } else if (snapshot.hasError) {
-              return Center(
-                child: const Text(
+              return const Center(
+                child: Text(
                   '에러가 발생했습니다\n다시 검색해주세요',
                   style: TextStyle(fontSize: 18.0),
                 ),

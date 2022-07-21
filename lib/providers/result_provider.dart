@@ -19,18 +19,20 @@ class ResultProvider with ChangeNotifier {
     required this.naverShoppingApi,
   });
 
-  Future<void> fetchResult() async {
+  Future<List<Store>> fetchResult() async {
     // _state = _state.copyWith(status: ResultStatus.loading);
     // notifyListeners();
 
     try {
       storeList = await naverShoppingApi.getStoreList(searchQuery);
+      return storeList;
       // _state = _state.copyWith(status: ResultStatus.loaded);
       // notifyListeners();
     } on CustomError catch (e) {
       // _state = _state.copyWith(status: ResultStatus.error, error: e);
       // notifyListeners();
       logger.d(e.errMsg);
+      rethrow;
 
       /// showDialog를 활용할 수 있다.
     }
