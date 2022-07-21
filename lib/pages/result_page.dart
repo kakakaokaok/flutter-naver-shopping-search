@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:naver_shopping_search/providers/result_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+import '../providers/result_provider.dart';
 
 class ResultPage extends StatelessWidget {
   const ResultPage({Key? key}) : super(key: key);
@@ -20,13 +21,20 @@ class ResultPage extends StatelessWidget {
               ),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
+              if (snapshot.data.length == 0) {
+                return Center(
+                  child: const Text(
+                    '검색 결과가 없습니다.',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                );
+              }
               final _storeList = snapshot.data;
               return Center(
                 child: ListView.builder(
                   itemCount: _storeList.length,
                   itemBuilder: (context, int index) {
                     final _storeData = _storeList[index];
-                    print(_storeData.link);
                     return ListTile(
                       title: Text(_storeData.title),
                       subtitle: Text(_storeData.mallName),
@@ -47,9 +55,11 @@ class ResultPage extends StatelessWidget {
                 ),
               );
             } else if (snapshot.hasError) {
-              return const Text(
-                '에러가 발생했습니다\n다시 검색해주세요',
-                style: TextStyle(fontSize: 18.0),
+              return Center(
+                child: const Text(
+                  '에러가 발생했습니다\n다시 검색해주세요',
+                  style: TextStyle(fontSize: 18.0),
+                ),
               );
             } else {
               return const Center(

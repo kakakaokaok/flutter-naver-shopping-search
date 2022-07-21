@@ -1,3 +1,6 @@
+/// 현 시점에서 사용하지 않아도 되는 파일.
+/// 나중을 위해 일단 남겨두기로 한다.
+
 // part of 'result_provider.dart';
 
 // enum ResultStatus {

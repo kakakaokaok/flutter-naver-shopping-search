@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:naver_shopping_search/services/naver_shopping_api.dart';
 import 'package:provider/provider.dart';
-import 'pages/search_page.dart';
 
+import 'pages/search_page.dart';
 import 'providers/result_provider.dart';
+import 'services/naver_shopping_api.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');

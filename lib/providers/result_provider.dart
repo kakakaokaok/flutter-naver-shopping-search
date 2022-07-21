@@ -1,11 +1,10 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import 'package:naver_shopping_search/models/custom_error.dart';
-import 'package:naver_shopping_search/models/search_query.dart';
-import 'package:naver_shopping_search/services/naver_shopping_api.dart';
-
+import '../models/custom_error.dart';
+import '../models/search_query.dart';
 import '../models/store.dart';
+import '../services/naver_shopping_api.dart';
+import '../utils/logger.dart';
 
 // part 'result_state.dart';
 
@@ -27,10 +26,13 @@ class ResultProvider with ChangeNotifier {
     try {
       storeList = await naverShoppingApi.getStoreList(searchQuery);
       // _state = _state.copyWith(status: ResultStatus.loaded);
-      notifyListeners();
+      // notifyListeners();
     } on CustomError catch (e) {
       // _state = _state.copyWith(status: ResultStatus.error, error: e);
       // notifyListeners();
+      logger.d(e.errMsg);
+
+      /// showDialog를 활용할 수 있다.
     }
   }
 }

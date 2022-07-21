@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:naver_shopping_search/models/search_query.dart';
-import 'package:naver_shopping_search/pages/result_page.dart';
-import 'package:naver_shopping_search/providers/result_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../models/search_query.dart';
+import '../providers/result_provider.dart';
+import 'result_page.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
