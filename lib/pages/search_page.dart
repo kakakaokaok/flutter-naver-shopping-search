@@ -79,7 +79,7 @@ class _SearchPageState extends State<SearchPage> {
                   onSaved: (String? input) {
                     // _keywords = input;
                     context.read<ResultProvider>().searchQuery =
-                        SearchQuery(display: 5, keywords: input!);
+                        SearchQuery(display: 45, keywords: input!);
                   },
                 ),
                 const SizedBox(

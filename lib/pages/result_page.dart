@@ -27,13 +27,22 @@ class _HomePageState extends State<ResultPage> {
               ),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
+              final _storeList = snapshot.data;
               return Center(
-                child: Text(
-                  'data: ${snapshot.data}',
-                  style: TextStyle(fontSize: 18.0),
-                ),
+                child: ListView.builder(
+                    itemBuilder: (context, int index) {
+                      final _storeData = _storeList[index];
+                      return ListTile(
+                        title: Text(
+                          '스토어명: ${_storeData.title}',
+                          style: TextStyle(fontSize: 12.0),
+                        ),
+                      );
+                    },
+                    itemCount: _storeList.length),
               );
             } else if (snapshot.hasError) {
+              // showDialog 활용, 또는 굳이 필요 없을듯?
               return const Text(
                 '에러가 발생했습니다\n다시 검색해주세요',
                 style: TextStyle(fontSize: 18.0),
