@@ -1,10 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-
-class SearchQuery with ChangeNotifier {
+class SearchQuery {
   final int display;
-  late String keywords;
+  final String keywords;
   SearchQuery({
     this.display = 45,
     required this.keywords,

@@ -16,6 +16,16 @@ class Store extends Equatable {
     required this.mallName,
   });
 
+  factory Store.initial() {
+    return Store(
+      title: '',
+      price: '',
+      link: '',
+      imageUrl: '',
+      mallName: '',
+    );
+  }
+
   @override
   List<Object> get props {
     return [

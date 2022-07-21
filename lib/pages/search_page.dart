@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:naver_shopping_search/models/search_query.dart';
 import 'package:naver_shopping_search/pages/result_page.dart';
+import 'package:naver_shopping_search/providers/result_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/logger.dart';
 
@@ -13,9 +15,8 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final _formKey = GlobalKey<FormState>();
-  String? _keyword; // Provider
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-
+// String? _keywords;
   void _submit() {
     setState(() {
       autovalidateMode = AutovalidateMode.always;
@@ -29,12 +30,7 @@ class _SearchPageState extends State<SearchPage> {
       ));
       form.save();
 
-      // 여기서 _keyword를 provider에 저장
-      // Provider.of<SearchQuery>(context, listen: false).keyword = _keyword!;
-      // var parsedJson;
-      logger.d('${SearchQuery(keywords: _keyword!).toJson().runtimeType}');
-
-      // logger.d('saved keyword: ${context.read<SearchQuery>().keyword}');
+      // save form to the provider here
 
       Navigator.push(
         context,
@@ -81,7 +77,9 @@ class _SearchPageState extends State<SearchPage> {
                     return null;
                   },
                   onSaved: (String? input) {
-                    _keyword = input;
+                    // _keywords = input;
+                    context.read<ResultProvider>().searchQuery =
+                        SearchQuery(display: 5, keywords: input!);
                   },
                 ),
                 const SizedBox(
