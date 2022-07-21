@@ -4,8 +4,6 @@ import 'package:naver_shopping_search/pages/result_page.dart';
 import 'package:naver_shopping_search/providers/result_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../utils/logger.dart';
-
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
@@ -35,7 +33,7 @@ class _SearchPageState extends State<SearchPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ResultPage(),
+          builder: (context) => const ResultPage(),
         ),
       );
       form.reset();

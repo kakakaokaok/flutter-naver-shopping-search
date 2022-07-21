@@ -5,13 +5,6 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 class ResultPage extends StatelessWidget {
   const ResultPage({Key? key}) : super(key: key);
-
-//   @override
-//   State<ResultPage> createState() => _HomePageState();
-// }
-
-// class _HomePageState extends State<ResultPage> {
-  /// FutureBuilder 사용시 Stateless 가능?
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +12,7 @@ class ResultPage extends StatelessWidget {
         title: const Text('검색 결과'),
       ),
       body: FutureBuilder(
-          future: Future.delayed(Duration(seconds: 2), () async {
+          future: Future.delayed(const Duration(seconds: 2), () async {
             await context.read<ResultProvider>().fetchResult();
             return context.read<ResultProvider>().storeList;
           }
@@ -33,6 +26,7 @@ class ResultPage extends StatelessWidget {
                   itemCount: _storeList.length,
                   itemBuilder: (context, int index) {
                     final _storeData = _storeList[index];
+                    print(_storeData.link);
                     return ListTile(
                       title: Text(_storeData.title),
                       subtitle: Text(_storeData.mallName),
@@ -42,7 +36,10 @@ class ResultPage extends StatelessWidget {
                         child: Image.network(_storeData.imageUrl),
                       ),
                       onTap: () async {
-                        await launchUrlString(_storeData.link);
+                        await launchUrlString(
+                          _storeData.link,
+                          mode: LaunchMode.externalApplication,
+                        );
                       },
                       trailing: Text('${_storeData.price}원'),
                     );
@@ -50,7 +47,6 @@ class ResultPage extends StatelessWidget {
                 ),
               );
             } else if (snapshot.hasError) {
-              // showDialog 활용, 또는 굳이 필요 없을듯?
               return const Text(
                 '에러가 발생했습니다\n다시 검색해주세요',
                 style: TextStyle(fontSize: 18.0),
