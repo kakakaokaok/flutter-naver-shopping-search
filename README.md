@@ -1,16 +1,4 @@
 # naver_shopping_search
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+네이버 쇼핑을 검색하는 플러터 앱입니다.
+AWS Lambda과 [파이썬 FastAPI를 사용하여 백엔드](https://github.com/kakakaokaok/fastapi-naver-shopping-search)를 구성했습니다.
