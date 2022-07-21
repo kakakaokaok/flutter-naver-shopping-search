@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:naver_shopping_search/models/search_query.dart';
 import 'package:naver_shopping_search/providers/result_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
-class ResultPage extends StatefulWidget {
+class ResultPage extends StatelessWidget {
   const ResultPage({Key? key}) : super(key: key);
 
-  @override
-  State<ResultPage> createState() => _HomePageState();
-}
+//   @override
+//   State<ResultPage> createState() => _HomePageState();
+// }
 
-class _HomePageState extends State<ResultPage> {
+// class _HomePageState extends State<ResultPage> {
   /// FutureBuilder 사용시 Stateless 가능?
   @override
   Widget build(BuildContext context) {
@@ -30,16 +30,24 @@ class _HomePageState extends State<ResultPage> {
               final _storeList = snapshot.data;
               return Center(
                 child: ListView.builder(
-                    itemBuilder: (context, int index) {
-                      final _storeData = _storeList[index];
-                      return ListTile(
-                        title: Text(
-                          '스토어명: ${_storeData.title}',
-                          style: TextStyle(fontSize: 12.0),
-                        ),
-                      );
-                    },
-                    itemCount: _storeList.length),
+                  itemCount: _storeList.length,
+                  itemBuilder: (context, int index) {
+                    final _storeData = _storeList[index];
+                    return ListTile(
+                      title: Text(_storeData.title),
+                      subtitle: Text(_storeData.mallName),
+                      leading: SizedBox(
+                        height: MediaQuery.of(context).size.height / 10,
+                        width: MediaQuery.of(context).size.height / 10,
+                        child: Image.network(_storeData.imageUrl),
+                      ),
+                      onTap: () async {
+                        await launchUrlString(_storeData.link);
+                      },
+                      trailing: Text('${_storeData.price}원'),
+                    );
+                  },
+                ),
               );
             } else if (snapshot.hasError) {
               // showDialog 활용, 또는 굳이 필요 없을듯?
@@ -48,7 +56,9 @@ class _HomePageState extends State<ResultPage> {
                 style: TextStyle(fontSize: 18.0),
               );
             } else {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
           }),
     );
